@@ -1,0 +1,103 @@
+{% extends "students/base.html" %}
+
+{% block body %}
+  <h3 class="text-center m-4">Thêm sinh viên</h3>
+  {% if success %}
+    <div class="alert alert-success" role="alert">
+      Thêm sinh viên thành công
+      <a href="{% url 'index' %}" class="alert-link">Trở về trang chủ.</a>
+    </div>
+  {% else %}
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <div class="card bg-light mb-3">
+          <div class="card-header">
+            <i class="fa-solid fa-address-card fa-lg"></i> Đăng ký sinh viên
+          </div>
+          <div class="card-body">
+            <form action="{% url 'add' %}" method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Thêm</button>
+              <a href="{% url 'index' %}" class="btn btn-secondary">Hủy</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<footer class="irs-footer-field" style="background: #0d4e96; color:white;">
+    <div class="container" >
+        <div class="row animatedParent animateOnce animateOnce"style="margin-top: 20px;">
+            <div class="col-md-1 hidden-sm">
+                <div class="irs-footer-about">
+                    <a href="/vn">
+                        <img class="irs-foooter-logo lazyloaded" data-src="https://www.haui.edu.vn/dnn/web/haui/assets/images/logo.png" alt="Đại học công nghiệp Hà Nội" width="100%" height="100%" src="https://www.haui.edu.vn/dnn/web/haui/assets/images/logo.png" >
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="irs-footer-heading">Bản đồ chỉ dẫn</h4>
+                <p style="">Trường Đại học Công nghiệp Hà Nội</p>
+                <div class="irs-mailbox">
+                    <div class="irs-footer-contact">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.473663078486!2d105.73291811540255!3d21.053735992299995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345457e292d5bf%3A0x20ac91c94d74439a!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1631076181348!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Trụ sở chính</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <i class="icofont icofont-map"></i>Số 298 đường Cầu Diễn, quận Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p>
+                            <i class="icofont icofont-phone" aria-hidden="true"></i>+84 243 765 5121
+                        </p>
+                        <p>
+                            <i class="icofont icofont-mail"></i>Email: dhcnhn@haui.edu.vn
+                        </p>
+                    </div>
+                </div>
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Các cơ sở khác</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <i class="icofont icofont-map"></i>Cơ sở 2: Phường Tây Tựu, Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p>
+                            <i class="icofont icofont-map"></i>Cơ sở 3: Lê Hồng Phong, TP. Phủ Lý, Hà Nam
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Liên kết site</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <a href="//www.haui.edu.vn" title="Trường Đại học Công nghiệp Hà Nội" style="color:white;"><i class="fa fa-chevron-right"></i> Trường Đại học Công nghiệp Hà Nội</a>
+                        </p>
+                        <p>
+                            <a href="//tuyensinh.haui.edu.vn" title="Cổng thông tin tuyển sinh" style="color:white;"><i class="fa fa-chevron-right"></i> Cổng thông tin tuyển sinh</a>
+                        </p>
+                        <p>
+                            <a href="//egov.haui.edu.vn" title="Hành chính điện tử" style="color:white;"><i class="fa fa-chevron-right"></i> Hành chính điện tử</a>
+                        </p>
+                        <p>
+                            <a href="//lms.haui.edu.vn" title="Đào tạo trực tuyến" style="color:white;"><i class="fa fa-chevron-right"></i> Đào tạo trực tuyến</a>
+                        </p>
+                        <p>
+                            <a href="//daotao.haui.edu.vn" title="Cổng thông tin đào tạo" style="color:white;"><i class="fa fa-chevron-right"></i> Cổng thông tin đào tạo</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+  {% endif %}
+{% endblock %}

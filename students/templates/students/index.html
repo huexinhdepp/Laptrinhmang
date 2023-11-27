@@ -1,0 +1,204 @@
+{% extends "students/base.html" %}
+
+{% block body %}
+<h3 class="m-4">Danh sách sinh viên</h3>
+<div class="row">
+  <div class="col-12">
+    {% if students %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Hồ sơ sinh viên
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">STT sinh viên</th>
+                  <th scope="col">Họ</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Ngành học</th>
+                  <th scope="col">Điểm tb</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for student in students %}
+                  <tr>
+                    <td>{{ student.student_number }}</td>
+                    <td>{{ student.first_name }}</td>
+                    <td>{{ student.last_name }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.field_of_study }}</td>
+                    <td>{{ student.gpa }}</td>
+                    <td>
+                      <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{student.id}}">
+                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                      </button>
+
+                      <!-- Modal - View Student -->
+                      <div class="modal" id="myModal{{student.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">
+                                Sinh viên: {{ student.first_name }} {{ student.last_name }}
+                              </h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <ul class="list-unstyled">
+                                <li>STT sinh viên: <strong>{{ student.student_number }}</strong></li>
+                                <li>Họ: <strong>{{ student.first_name }}</strong></li>
+                                <li>Tên: <strong>{{ student.last_name }}</strong></li>
+                                <li>Email: <strong>{{ student.email }}</strong></li>
+                                <li>Ngành học: <strong>{{ student.field_of_study }}</strong></li>
+                                <li>Điểm tb: <strong>{{ student.gpa }}</strong></li>
+                              </ul>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <a class="btn btn-warning me-1" href="{% url 'edit' student.id %}">
+                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                      </a>
+
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{student.id}}">
+                        <i class="fa-solid fa-trash-can fa-lg"></i>
+                      </button>
+
+                      <!-- Modal - Delete Student -->
+                      <div class="modal" id="delete{{student.id}}" tabindex="-1" aria-labelledby="myModalLabel2" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">
+                                Sinh viên: {{ student.first_name }} {{ student.last_name }}
+                              </h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>bạn có muốn xóa sinh viên này không?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <form action="{% url 'delete' student.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-primary" value="Delete">
+                              </form>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">hủy</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </p>
+      </div>
+    </div>
+    {% else %}
+      <h5 class="alert alert-primary ms-4 me-4">No Student Records</h5>
+    {% endif %}
+  </div>
+</div>
+<!-- FOOTER -->
+    <footer class="irs-footer-field" style="background: #0d4e96; color:white;">
+    <div class="container" >
+        <div class="row animatedParent animateOnce animateOnce"style="margin-top: 20px;">
+            <div class="col-md-1 hidden-sm">
+                <div class="irs-footer-about">
+                    <a href="/vn">
+                        <img class="irs-foooter-logo lazyloaded" data-src="https://www.haui.edu.vn/dnn/web/haui/assets/images/logo.png" alt="Đại học công nghiệp Hà Nội" width="100%" height="100%" src="https://www.haui.edu.vn/dnn/web/haui/assets/images/logo.png" >
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="irs-footer-heading">Bản đồ chỉ dẫn</h4>
+                <p style="">Trường Đại học Công nghiệp Hà Nội</p>
+                <div class="irs-mailbox">
+                    <div class="irs-footer-contact">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.473663078486!2d105.73291811540255!3d21.053735992299995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345457e292d5bf%3A0x20ac91c94d74439a!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1631076181348!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Trụ sở chính</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <i class="icofont icofont-map"></i>Số 298 đường Cầu Diễn, quận Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p>
+                            <i class="icofont icofont-phone" aria-hidden="true"></i>+84 243 765 5121
+                        </p>
+                        <p>
+                            <i class="icofont icofont-mail"></i>Email: dhcnhn@haui.edu.vn
+                        </p>
+                    </div>
+                </div>
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Các cơ sở khác</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <i class="icofont icofont-map"></i>Cơ sở 2: Phường Tây Tựu, Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p>
+                            <i class="icofont icofont-map"></i>Cơ sở 3: Lê Hồng Phong, TP. Phủ Lý, Hà Nam
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="irs-footer-contact">
+                    <h4 class="irs-footer-heading">Liên kết site</h4>
+                    <div class="irs-mailbox">
+                        <p>
+                            <a href="//www.haui.edu.vn" title="Trường Đại học Công nghiệp Hà Nội" style="color:white;"><i class="fa fa-chevron-right"></i> Trường Đại học Công nghiệp Hà Nội</a>
+                        </p>
+                        <p>
+                            <a href="//tuyensinh.haui.edu.vn" title="Cổng thông tin tuyển sinh" style="color:white;"><i class="fa fa-chevron-right"></i> Cổng thông tin tuyển sinh</a>
+                        </p>
+                        <p>
+                            <a href="//egov.haui.edu.vn" title="Hành chính điện tử" style="color:white;"><i class="fa fa-chevron-right"></i> Hành chính điện tử</a>
+                        </p>
+                        <p>
+                            <a href="//lms.haui.edu.vn" title="Đào tạo trực tuyến" style="color:white;"><i class="fa fa-chevron-right"></i> Đào tạo trực tuyến</a>
+                        </p>
+                        <p>
+                            <a href="//daotao.haui.edu.vn" title="Cổng thông tin đào tạo" style="color:white;"><i class="fa fa-chevron-right"></i> Cổng thông tin đào tạo</a>
+                        </p>
+                    </div>
+                    <!-- <div class="footer__social">
+                        <ul>
+                            <li><a href="//fb.com/HaUIofficial" class="zalo"><img src="https://www.haui.edu.vn/dnn/web/haui/assets/images/svg/facebook.svg" alt="Facebook"></a></li>
+                            <li><a href="//www.youtube.com/c/HaUITV" class="zalo"><img src="https://www.haui.edu.vn/dnn/web/haui/assets/images/svg/youtube.svg" alt="Youtube"></a></li>
+
+                            <li>
+                                <a href="//zalo.me/3497735222148276030" class="zalo"><img src="https://www.haui.edu.vn/dnn/web/haui/assets/images/svg/zalo.png" alt="Zalo"></a>
+                            </li>
+                            <li>
+                                <a href="https://vt.tiktok.com/ZSJE6uEcT/" class="tiktok"><img src="https://www.haui.edu.vn/dnn/web/haui/assets/images/svg/tiktok.svg" alt="Tiktok"></a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+{% endblock %}
